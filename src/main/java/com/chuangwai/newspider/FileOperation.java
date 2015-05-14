@@ -1,9 +1,13 @@
 package com.chuangwai.newspider;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 public class FileOperation {
 	
@@ -28,6 +32,32 @@ public class FileOperation {
         }   
 		
 		return ;
+	}
+	
+	public static ArrayList<String> read2Memory(String fileName)
+	{
+		ArrayList<String> text = new ArrayList<String>();
+		String str;
+		String tempString = null;
+	
+		InputStreamReader isr;
+		try {
+			isr = new InputStreamReader(new FileInputStream(fileName), "UTF-8");
+			BufferedReader fileReader = new BufferedReader(isr);
+	
+			while ((tempString = fileReader.readLine()) != null)
+			{
+				str = tempString;
+				text.add(str);
+			}
+			fileReader.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return text;
+
 	}
 	
 	

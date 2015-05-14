@@ -62,6 +62,7 @@ public class Main {
 			System.out.println("title :"+ret.getTitle()) ;
 			
 			String tmp = Regex.matchOne(content, "(?<=<!--正文内容-->).*?(?=<!-- loading -->)") ;
+			tmp.replaceAll("<p align=\"right\">", "");
 			ret.setContent( tmp.replaceAll("(?<=<a).*?(?=/a>)", "")) ;
 			
 			tmp = Regex.matchOne(content, "(?<=h_nav_items).*?(?=</div>)") ;
@@ -139,6 +140,10 @@ public class Main {
 	
 	public static void main(String[] args)
 	{
+		
+		
+		
+		
 		while(true)
 		{
 			try
