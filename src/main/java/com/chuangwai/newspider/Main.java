@@ -17,7 +17,6 @@ public class Main {
 	public static void writeIntoMysql(News obj)
 	{
 		Mysql mysql = new Mysql("jdbc:mysql://localhost/chuangwai?useUnicode=true&characterEncoding=utf8","root","chuangwai123");
-		ResultSet ret ;
 		
 		String sql = "insert into news (category,title,content,source1,source2,pub_time) values(\""+
 						obj.getCategory()+"\",\"" +
@@ -27,24 +26,7 @@ public class Main {
 						obj.getSource2()+"\",\""+
 						obj.getPubtime()+"\");" ;
 		
-		
 		mysql.update(sql) ;
-		
-		ret = mysql.query("select * from news");
-		
-		try {
-			while( ret.next() )
-			{
-				for( int i = 0 ; i < 7 ; i++ )
-				{
-					System.out.print(ret.getString(1)+"\t");
-				}
-				System.out.println("");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return ;
 	}
@@ -137,6 +119,7 @@ public class Main {
 			
 			System.out.println("cnt: "+cnt++) ;
 			FileOperation.write("out.txt", news.toJSON()) ;
+			writeIntoMysql(news);
 		}
 		
 		stop = tmp ;
