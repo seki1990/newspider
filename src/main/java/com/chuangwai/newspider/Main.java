@@ -1,5 +1,7 @@
 package com.chuangwai.newspider;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -9,6 +11,33 @@ public class Main {
 	private static String stop = null ;
 	private static int cnt = 0 ;
 	
+	
+	
+	
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException
+	{
+		Mysql mysql = new Mysql("jdbc:mysql://localhost/chuangwai?useUnicode=true&characterEncoding=utf8","root","chuangwai123");
+		ResultSet ret ;
+		
+		mysql.update("insert into news (category,title,content,source1,source2,pub_time) values(\"cate\",\" tit\",\"hello world222\",\"netease\",\"china joy\",\"2015-5-23 1:04:02\");") ;
+		
+		ret = mysql.query("select * from news");
+		
+		while( ret.next() )
+		{
+			for( int i = 0 ; i < 7 ; i++ )
+			{
+				System.out.print(ret.getInt(1)+"\t");
+			}
+			System.out.println("");
+		}
+		
+		return ;
+	}
+	
+	
+	
+
 	
 	public static String getUrlContent(String url)
 	{
@@ -107,6 +136,8 @@ public class Main {
 	}
 	
 	
+	
+	/*
 	public static void main(String[] args)
 	{
 		while(true)
@@ -121,6 +152,6 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 
 }
