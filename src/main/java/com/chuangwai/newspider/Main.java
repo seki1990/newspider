@@ -27,7 +27,7 @@ public class Main {
 		{
 			for( int i = 0 ; i < 7 ; i++ )
 			{
-				System.out.print(ret.getInt(1)+"\t");
+				System.out.print(ret.getString(1)+"\t");
 			}
 			System.out.println("");
 		}
