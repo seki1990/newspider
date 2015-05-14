@@ -71,7 +71,7 @@ public class Main {
 			tmp = Regex.matchOne(content, "(?<=<span class=\"source\">).*?(?=</span>)") ;
 			for( int i = tmp.length()-1 ; i>=0 ; i-- )
 			{
-				if( tmp.charAt(i)==' ')
+				if( tmp.charAt(i)>=0 )
 				{
 					ret.setPubtime(tmp.substring(0, i));
 					ret.setSource2(tmp.substring(i+1, tmp.length()));
