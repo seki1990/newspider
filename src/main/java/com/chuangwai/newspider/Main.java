@@ -69,9 +69,9 @@ public class Main {
 			System.out.println("category :"+ret.getCategory()) ;
 			ret.setSource1("新浪") ;
 			tmp = Regex.matchOne(content, "(?<=<span class=\"source\">).*?(?=</span>)") ;
-			for( int i = tmp.length()-1 ; i>=0 ; i-- )
+			for( int i = 0 ; i < tmp.length() ; i++ )
 			{
-				if( tmp.charAt(i)>=0 )
+				if( tmp.charAt(i)==' ' )
 				{
 					ret.setPubtime(tmp.substring(0, i));
 					ret.setSource2(tmp.substring(i+1, tmp.length()));
