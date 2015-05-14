@@ -13,31 +13,41 @@ public class Main {
 	
 	
 	
-	
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException
+
+	public static void writeIntoMysql(News obj)
 	{
 		Mysql mysql = new Mysql("jdbc:mysql://localhost/chuangwai?useUnicode=true&characterEncoding=utf8","root","chuangwai123");
 		ResultSet ret ;
 		
-		mysql.update("insert into news (category,title,content,source1,source2,pub_time) values(\"cate\",\" tit\",\"hello world222\",\"netease\",\"china joy\",\"2015-5-23 1:04:02\");") ;
+		String sql = "insert into news (category,title,content,source1,source2,pub_time) values(\""+
+						obj.getCategory()+"\",\"" +
+						obj.getTitle()+"\",\""+
+						obj.getContent()+"\",\""+
+						obj.getSource1()+"\",\""+
+						obj.getSource2()+"\",\""+
+						obj.getPubtime()+"\");" ;
+		
+		
+		mysql.update(sql) ;
 		
 		ret = mysql.query("select * from news");
 		
-		while( ret.next() )
-		{
-			for( int i = 0 ; i < 7 ; i++ )
+		try {
+			while( ret.next() )
 			{
-				System.out.print(ret.getString(1)+"\t");
+				for( int i = 0 ; i < 7 ; i++ )
+				{
+					System.out.print(ret.getString(1)+"\t");
+				}
+				System.out.println("");
 			}
-			System.out.println("");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return ;
 	}
-	
-	
-	
-
 	
 	public static String getUrlContent(String url)
 	{
@@ -45,7 +55,6 @@ public class Main {
 		
 		return ans ;
 	}
-	
 	
 	public static ArrayList<String> getUrlList(String content)
 	{
@@ -76,8 +85,16 @@ public class Main {
 			tmp = Regex.matchOne(content, "(?<=h_nav_items).*?(?=</div>)") ;
 			ret.setCategory( Regex.matchLast(tmp, "(?<=title=\").*?(?=\")")) ;
 			System.out.println("category :"+ret.getCategory()) ;
-			ret.setSource("新浪") ;
-			ret.setPubtime( Regex.matchOne(content, "(?<=<span class=\"source\">).*?(?=</span>)"));
+			ret.setSource1("新浪") ;
+			tmp = Regex.matchOne(content, "(?<=<span class=\"source\">).*?(?=</span>)") ;
+			for( int i = tmp.length()-1 ; i>=0 ; i-- )
+			{
+				if( tmp.charAt(i)==' ')
+				{
+					ret.setPubtime(tmp.substring(0, i));
+					ret.setSource2(tmp.substring(i+1, tmp.length()));
+				}
+			}
 		}catch(Exception e){
 			System.out.println("parsing error.") ;
 			return null ;
@@ -137,21 +154,20 @@ public class Main {
 	
 	
 	
-	/*
 	public static void main(String[] args)
 	{
 		while(true)
 		{
 			try
 			{
-			work() ;
-			sleep(1000*60) ;
+				work() ;
+				sleep(1000*60) ;
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
 		}
-	}*/
+	}
 
 }
