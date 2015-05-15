@@ -10,7 +10,7 @@ public class News {
 	private String category ;
 	private String source1 ;
 	private String source2 ;
-	private String pub_time ;
+	private int pub_time ;
 	
 	public News()
 	{
@@ -19,10 +19,10 @@ public class News {
 		category = null ;
 		source1 = null ;
 		source2 = null ;
-		pub_time = null ;
+		pub_time = -1 ;
 	}
 	
-	public News(String tit, String cont, String cat, String src1, String src2, String tm)
+	public News(String tit, String cont, String cat, String src1, String src2, int tm)
 	{
 		title = tit ;
 		content = cont ;
@@ -37,14 +37,14 @@ public class News {
 	public void setCategory(String str) {category = str;}
 	public void setSource1(String str) {source1 = str;}
 	public void setSource2(String str) {source2 = str;}
-	public void setPubtime(String str) {pub_time = str;}
+	public void setPubtime(int str) {pub_time = str;}
 	
 	public String getTitle() {return title;}
 	public String getContent() {return content;}
 	public String getCategory() {return category;}
 	public String getSource1() {return source1;}
 	public String getSource2() {return source2;}
-	public String getPubtime() {return pub_time;}
+	public int getPubtime() {return pub_time;}
 	
 	
 	public String toJSON()

@@ -1,7 +1,9 @@
 package com.chuangwai.newspider;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -62,7 +64,7 @@ public class Main {
 			System.out.println("title :"+ret.getTitle()) ;
 			
 			String tmp = Regex.matchOne(content, "(?<=<!--正文内容-->).*?(?=<!-- loading -->)") ;
-			tmp.replaceAll("<p align=\"right\">", "");
+			tmp = tmp.replaceAll("<p align=\"right\">", "");
 			ret.setContent( tmp.replaceAll("(?<=<a).*?(?=/a>)", "")) ;
 			
 			tmp = Regex.matchOne(content, "(?<=h_nav_items).*?(?=</div>)") ;
@@ -74,7 +76,10 @@ public class Main {
 			{
 				if( tmp.charAt(i)==' ' )
 				{
-					ret.setPubtime(tmp.substring(0, i));
+					SimpleDateFormat format = new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+					String strTime = tmp.substring(0, i);
+					Date date = (Date) format.parse(strTime);
+					ret.setPubtime((int) date.getTime());
 					ret.setSource2(tmp.substring(i+1, tmp.length()));
 				}
 			}
@@ -86,6 +91,27 @@ public class Main {
 		return ret ;
 	}
 	
+	
+	private static int getLastTime()
+	{
+		Mysql mysql = new Mysql("jdbc:mysql://localhost/chuangwai?useUnicode=true&characterEncoding=utf8","root","chuangwai123");
+		ResultSet ret ;
+		ret = mysql.query("select pub_time from news order by pub_time desc limit 1");
+		
+		int ans = -1 ;
+		try {
+			while( ret.next() )
+			{
+				 ans = ret.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ans ;
+	}
+	
 	public static void work()
 	{
 		String url = "http://news.sina.cn/roll.d.html/?vt=4" ;
@@ -93,8 +119,7 @@ public class Main {
 		String text = getUrlContent(url);
 		ArrayList<String> urls = getUrlList(text);
 		
-		String tmp = null ;
-		boolean first = true ;
+		int lastTime = getLastTime() ;
 		for ( int i = 0 ; i < urls.size() ; i++ )
 		{
 			url = urls.get(i);
@@ -103,27 +128,13 @@ public class Main {
 			
 			News news = getNews(text) ;
 			if( news==null ) continue ;
-			if( first==true )
-			{
-				first = false ;
-				tmp = news.getPubtime() ;
-			}
-			
-			if( stop == null )
-			{
-				stop = news.getPubtime() ;
-			}
-			else if( stop.equals(news.getPubtime()) )
-			{
-				break ;
-			}
+			if( news.getPubtime()<=lastTime ) break ;
 			
 			System.out.println("cnt: "+cnt++) ;
 			FileOperation.write("out.txt", news.toJSON()) ;
-			writeIntoMysql(news);
+	//		writeIntoMysql(news);
 		}
 		
-		stop = tmp ;
 		return ;
 	}
 	
@@ -138,11 +149,31 @@ public class Main {
 	
 	
 	
+	
+	private static void runOnce()
+	{
+		Mysql mysql = new Mysql("jdbc:mysql://localhost/chuangwai?useUnicode=true&characterEncoding=utf8","root","chuangwai123");
+		ResultSet ret ;
+		ret = mysql.query("select * from news");
+		
+		try {
+			while( ret.next() )
+			{
+				for( int i = 0 ; i < 7 ; i++ )
+				{
+					System.out.print(ret.getInt(1)+"\t");
+				}
+				System.out.println("");
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args)
 	{
-		
-		
-		
+//		runOnce();
 		
 		while(true)
 		{
