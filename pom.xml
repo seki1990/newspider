@@ -32,7 +32,7 @@
     
   </dependencies>
   <build>
-        <finalName>nespider</finalName>
+        <finalName>newspider</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
