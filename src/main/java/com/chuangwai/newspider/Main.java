@@ -47,7 +47,7 @@ public class Main {
 		
 		String pattern = "(?<=<div class=\"content_list\">)[\\s\\S]*?(?=</ul>)";
 		content = Regex.matchOne(content, pattern) ;
-		System.out.println(content);
+		
 		pattern = "(?<=<div class=\"dd_bt\"><a href=\").*?(?=\">)" ;
 		ret = Regex.matchAll(content, pattern) ;
 		
@@ -66,6 +66,7 @@ public class Main {
 			tmp = Regex.matchOne(content, "(?<=<!--正文start-->).*?(?=<!--正文start-->)") ;
 			tmp = tmp.replaceAll("<.*?>", "").replaceAll("\"", "'");
 			ret.setContent( tmp) ;
+			System.out.println("content ok");
 			
 			tmp = Regex.matchOne(content, "(?<=<div id=\"nav\">).*?(?=</div>)") ;
 			ret.setCategory( Regex.matchLast(tmp, "(?<=\">).*?(?=</a>)")) ;
@@ -75,12 +76,14 @@ public class Main {
 			
 			tmp = Regex.matchOne(content, "(?<=source_baidu\">).*?(?=</span>)") ;
 			ret.setSource2( Regex.matchOne(tmp, "(?<=blank\">).*?(?=</a>)")) ;
+			System.out.println("source2: "+ret.getSource2());
 			
 			tmp = Regex.matchOne(content, "(?<=pubtime_baidu\">).*?(?=</span>)");
 			SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 			Date date = format.parse(tmp);
 			System.out.println(date);
 			ret.setPubtime((int) (date.getTime()/1000));
+			
 		}catch(Exception e){
 			System.out.println("parsing error.") ;
 			return null ;
