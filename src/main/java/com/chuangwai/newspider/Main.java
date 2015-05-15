@@ -72,7 +72,7 @@ public class Main {
 			System.out.println("category :"+ret.getCategory()) ;
 			ret.setSource1("新浪") ;
 			tmp = Regex.matchOne(content, "(?<=<span class=\"source\">).*?(?=</span>)") ;
-			for( int i = 0 ; i < tmp.length() ; i++ )
+			for( int i = tmp.length()-1 ; i >= 0 ; i-- )
 			{
 				if( tmp.charAt(i)==' ' )
 				{
@@ -81,6 +81,7 @@ public class Main {
 					Date date = (Date) format.parse(strTime);
 					ret.setPubtime((int) date.getTime());
 					ret.setSource2(tmp.substring(i+1, tmp.length()));
+					break ;
 				}
 			}
 		}catch(Exception e){
@@ -132,7 +133,7 @@ public class Main {
 			
 			System.out.println("cnt: "+cnt++) ;
 			FileOperation.write("out.txt", news.toJSON()) ;
-	//		writeIntoMysql(news);
+			writeIntoMysql(news);
 		}
 		
 		return ;
