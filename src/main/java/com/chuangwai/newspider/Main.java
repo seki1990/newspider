@@ -191,8 +191,8 @@ public class Main {
 						break;
 					}
 				}
-
 			}
+			mysql.update(up);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
