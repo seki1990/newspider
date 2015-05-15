@@ -79,7 +79,7 @@ public class Main {
 				{
 					SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 					String strTime = tmp.substring(0, i);
-					Date date = (Date) format.parse(strTime);
+					Date date = format.parse(strTime);
 					ret.setPubtime((int) date.getTime());
 					ret.setSource2(tmp.substring(i+1, tmp.length()));
 					break ;
