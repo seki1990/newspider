@@ -1,10 +1,15 @@
 package com.chuangwai.newspider;
 
+/**********************
+ * 
+ * @author seki
+ * @date 2015.5.13
+ * 
+ */
+
 public class News {
 	
-	private static int count = 0 ;
-	
-	
+	private int id ;
 	private String title ;
 	private String content ;
 	private String category ;
@@ -14,6 +19,7 @@ public class News {
 	
 	public News()
 	{
+		id = -1 ;
 		title = null ;
 		content = null ;
 		category = null ;
@@ -22,8 +28,9 @@ public class News {
 		pub_time = -1 ;
 	}
 	
-	public News(String tit, String cont, String cat, String src1, String src2, int tm)
+	public News(int i, String tit, String cont, String cat, String src1, String src2, int tm)
 	{
+		id = i ;
 		title = tit ;
 		content = cont ;
 		category = cat ;
@@ -32,13 +39,15 @@ public class News {
 		pub_time = tm ;
 	}
 	
+	public void setId(int x) {id = x;}
 	public void setTitle(String str) {title = str;}
 	public void setContent(String str) {content = str;}
 	public void setCategory(String str) {category = str;}
 	public void setSource1(String str) {source1 = str;}
 	public void setSource2(String str) {source2 = str;}
-	public void setPubtime(int str) {pub_time = str;}
+	public void setPubtime(int x) {pub_time = x;}
 	
+	public int getId() {return id;}
 	public String getTitle() {return title;}
 	public String getContent() {return content;}
 	public String getCategory() {return category;}
@@ -46,14 +55,5 @@ public class News {
 	public String getSource2() {return source2;}
 	public int getPubtime() {return pub_time;}
 	
-	
-	public String toJSON()
-	{
-		String ret = null ;
-		count++ ;
-		ret = "["+count+"],["+title+"],["+content+"],["+category+"],["+source1+"],["+pub_time+"]\n" ;
-
-		return ret ;
-	}
 
 }

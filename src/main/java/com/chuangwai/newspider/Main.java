@@ -61,7 +61,7 @@ public class Main {
 		News ret = new News();
 		
 		try{
-			ret.setTitle( Regex.matchOne(content, "(?<=<title>).*?(?=</title>)")) ;
+			ret.setTitle( Regex.matchOne(content, "(?<=<title>).*?(?=_)")) ;
 			System.out.println("title :"+ret.getTitle()) ;
 			
 			String tmp = Regex.matchOne(content, "(?<=<!--正文内容-->).*?(?=<!-- loading -->)") ;
@@ -135,7 +135,6 @@ public class Main {
 			if( news.getPubtime()<=lastTime ) break ;
 			
 			System.out.println("cnt: "+cnt++) ;
-			FileOperation.write("out.txt", news.toJSON()) ;
 			writeIntoMysql(news);
 		}
 		
@@ -154,30 +153,26 @@ public class Main {
 	
 	
 	
-	private static void runOnce()
+	private static void allInMysql()
 	{
-		Mysql mysql = new Mysql("jdbc:mysql://localhost/chuangwai?useUnicode=true&characterEncoding=utf8","root","chuangwai123");
-		ResultSet ret ;
-		ret = mysql.query("select * from news");
+		ArrayList<String> list = new ArrayList<String>();
+		list =FileOperation.read("out_bak.txt");
 		
-		try {
-			while( ret.next() )
-			{
-				for( int i = 0 ; i < 7 ; i++ )
-				{
-					System.out.print(ret.getInt(1)+"\t");
-				}
-				System.out.println("");
-			}
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(list.get(0));
+		System.out.println(list.size());
+		
+	}
+	private static void delSame()
+	{
+		
+		return ;
 	}
 	
 	public static void main(String[] args)
 	{
-//		runOnce();
+	//	allInMysql();
+	//	delSame();		
+	//	if(true) return ;
 				
 		while(true)
 		{

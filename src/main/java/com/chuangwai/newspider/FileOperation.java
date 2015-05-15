@@ -34,7 +34,7 @@ public class FileOperation {
 		return ;
 	}
 	
-	public static ArrayList<String> read2Memory(String fileName)
+	public static ArrayList<String> read(String fileName)
 	{
 		ArrayList<String> text = new ArrayList<String>();
 		String str;
