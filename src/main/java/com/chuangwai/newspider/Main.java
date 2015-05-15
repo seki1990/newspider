@@ -63,7 +63,7 @@ public class Main {
 			ret.setTitle( tmp.substring(0, tmp.indexOf('-'))) ;
 			System.out.println("title :"+ret.getTitle()) ;
 			
-			tmp = Regex.matchOne(content, "(?<=<div class=\"left_zw\").*?(?=<!--)") ;
+			tmp = Regex.matchOne(content, "(?<=eft_zw\" style=\"position:relative\">).*?(?=<!--)") ;
 			tmp = tmp.replaceAll("<.*?>", "").replaceAll("\"", "'");
 			ret.setContent( tmp) ;
 			System.out.println("content ok");
@@ -124,6 +124,7 @@ public class Main {
 		for ( int i = 0 ; i < urls.size() ; i++ )
 		{
 			url = urls.get(i);
+			sleep(200);
 			if( url.contains("video")||url.contains("photo") )  continue ;
 			System.out.println(url);
 			text = getUrlContent(url) ;
