@@ -206,9 +206,9 @@ public class Main {
 	//	delSame();
 	//	titletiny();
 		
-		System.out.println(getUrlContent("http://www.chinanews.com/scroll-news/news1.html"));
+	//	System.out.println(getUrlContent("http://www.chinanews.com/scroll-news/news1.html"));
 				
-		if(true) return ;
+	//	if(true) return ;
 		while(true)
 		{
 			try
