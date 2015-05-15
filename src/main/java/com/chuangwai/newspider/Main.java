@@ -63,7 +63,7 @@ public class Main {
 			ret.setTitle( tmp.substring(0, tmp.indexOf('-'))) ;
 			System.out.println("title :"+ret.getTitle()) ;
 			
-			tmp = Regex.matchOne(content, "(?<=<!--正文start-->).*?(?=<!--正文start-->)") ;
+			tmp = Regex.matchOne(content, "(?<=<div class=\"left_zw\").*?(?=<!--)") ;
 			tmp = tmp.replaceAll("<.*?>", "").replaceAll("\"", "'");
 			ret.setContent( tmp) ;
 			System.out.println("content ok");
@@ -203,10 +203,12 @@ public class Main {
 	public static void main(String[] args)
 	{
 	//	allInMysql();
-	//	delSame();		
-	//	if(true) return ;
+	//	delSame();
 	//	titletiny();
+		
+		System.out.println(getUrlContent("http://www.chinanews.com/scroll-news/news1.html"));
 				
+		if(true) return ;
 		while(true)
 		{
 			try
