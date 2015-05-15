@@ -130,7 +130,7 @@ public class Main {
 			if( news.getPubtime()<=lastTime ) break ;
 			
 			System.out.println("cnt: "+cnt++) ;
-	//		writeIntoMysql(news);
+			writeIntoMysql(news);
 		}
 		
 		return ;
