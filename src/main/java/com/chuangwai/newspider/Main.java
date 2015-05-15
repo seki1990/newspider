@@ -167,12 +167,47 @@ public class Main {
 		
 		return ;
 	}
+	private static void titletiny()
+	{
+		Mysql mysql = new Mysql("jdbc:mysql://localhost/chuangwai?useUnicode=true&characterEncoding=utf8","root","chuangwai123");
+		ResultSet ret ;
+		ret = mysql.query("select id,title from news");
+		
+		ArrayList<String> up = new ArrayList<String>();
+		try {
+			while( ret.next() )
+			{
+				String id = ret.getString(1);
+				String title = ret.getString(2);
+				for( int i = title.length()-1 ; i >= 0 ; i-- )
+				{
+					if( title.charAt(i)=='_' )
+					{
+						title = title.substring(0, i);
+						String sql = "update news set title=\""+title+"\" where id="+id ;
+						System.out.println(sql);
+						up.add( sql);
+						
+						break;
+					}
+				}
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ;
+	}
+	
 	
 	public static void main(String[] args)
 	{
 	//	allInMysql();
 	//	delSame();		
 	//	if(true) return ;
+		titletiny();
 				
 		while(true)
 		{
