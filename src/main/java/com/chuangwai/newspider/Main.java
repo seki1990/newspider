@@ -65,6 +65,7 @@ public class Main {
 			
 			String tmp = Regex.matchOne(content, "(?<=<!--正文内容-->).*?(?=<!-- loading -->)") ;
 			tmp = tmp.replaceAll("<p align=\"right\">", "");
+			tmp = tmp.replaceAll("\"", "'");
 			ret.setContent( tmp.replaceAll("(?<=<a).*?(?=/a>)", "")) ;
 			
 			tmp = Regex.matchOne(content, "(?<=h_nav_items).*?(?=</div>)") ;
