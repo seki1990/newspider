@@ -123,7 +123,7 @@ public class Main {
 		{
 			url = urls.get(i);
 			sleep(250);
-			if( url.contains("shipin")||url.contains("tp") )  continue ;
+			if( url.contains("/shipin/")||url.contains("/tp/") )  continue ;
 			System.out.println(url);
 			text = getUrlContent(url) ;
 			
