@@ -60,7 +60,7 @@ public class Main {
 		
 		try{
 			String tmp = Regex.matchOne(content, "(?<=<title>).*?(?=</title>)");
-			ret.setTitle( tmp.substring(0, tmp.indexOf('-'))) ;
+			ret.setTitle( tmp.substring(0, tmp.indexOf('-')).replaceAll("\"", "'")) ;
 			System.out.println("title :"+ret.getTitle()) ;
 			
 			tmp = Regex.matchOne(content, "(?<=eft_zw\" style=\"position:relative\">).*?(?=<!--)") ;
