@@ -1,16 +1,16 @@
 package com.chuangwai.newspider;
 
-import java.sql.Date;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 
 public class Main {
 
-	private static String stop = null ;
 	private static int cnt = 0 ;
 	
 	
@@ -77,7 +77,7 @@ public class Main {
 			{
 				if( tmp.charAt(i)==' ' )
 				{
-					SimpleDateFormat format = new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+					SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 					String strTime = tmp.substring(0, i);
 					Date date = (Date) format.parse(strTime);
 					ret.setPubtime((int) date.getTime());
