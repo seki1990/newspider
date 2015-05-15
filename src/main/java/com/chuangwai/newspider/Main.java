@@ -122,7 +122,7 @@ public class Main {
 		for ( int i = 0 ; i < urls.size() ; i++ )
 		{
 			url = urls.get(i);
-			sleep(200);
+			sleep(250);
 			if( url.contains("video")||url.contains("photo") )  continue ;
 			System.out.println(url);
 			text = getUrlContent(url) ;
@@ -201,8 +201,11 @@ public class Main {
 	
 	public static void main(String[] args)
 	{
-		String url = "http://www.chinanews.com/scroll-news/news1.html" ;
-		work(url);
+		for ( int i = 10 ; i > 0 ; i-- )
+		{
+			String url = "http://www.chinanews.com/scroll-news/news"+i+".html" ;
+			work(url);
+		}
 		
 	/*	while(true)
 		{
