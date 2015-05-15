@@ -19,7 +19,6 @@ public class Regex {
 			ret = matcher.group(0);
 		}
 		
-	
 		return ret ;
 	}
 	
@@ -34,7 +33,6 @@ public class Regex {
 		{
 			ret.add(matcher.group()) ;
 		}
-		
 		
 		return ret ;
 	}

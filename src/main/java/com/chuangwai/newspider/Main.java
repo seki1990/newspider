@@ -45,13 +45,11 @@ public class Main {
 	{
 		ArrayList<String> ret = new ArrayList<String>() ;
 		
-		String pattern = "(?<=<div class=\"carditems_box\" id=\"j_items_list\">)[\\s\\S]*?(?=</div>)";
+		String pattern = "(?<=<div class=\"content_list\">)[\\s\\S]*?(?=</ul>)";
 		content = Regex.matchOne(content, pattern) ;
-		
-		
-		pattern = "(?<=<a href=\").*?(?=\")" ;
+		System.out.println(content);
+		pattern = "(?<=<div class=\"dd_bt\"><a href=\").*?(?=\">)" ;
 		ret = Regex.matchAll(content, pattern) ;
-		
 		
 		return ret ;
 	}
@@ -61,32 +59,28 @@ public class Main {
 		News ret = new News();
 		
 		try{
-			ret.setTitle( Regex.matchOne(content, "(?<=<title>).*?(?=_)")) ;
+			String tmp = Regex.matchOne(content, "(?<=<title>).*?(?=</title>)");
+			ret.setTitle( tmp.substring(0, tmp.indexOf('-'))) ;
 			System.out.println("title :"+ret.getTitle()) ;
 			
-			String tmp = Regex.matchOne(content, "(?<=<!--正文内容-->).*?(?=<!-- loading -->)") ;
-			tmp = tmp.replaceAll("<p align=\"right\">", "");
-			tmp = tmp.replaceAll("\"", "'");
-			ret.setContent( tmp.replaceAll("(?<=<a).*?(?=/a>)", "")) ;
+			tmp = Regex.matchOne(content, "(?<=<!--正文start-->).*?(?=<!--正文start-->)") ;
+			tmp = tmp.replaceAll("<.*?>", "").replaceAll("\"", "'");
+			ret.setContent( tmp) ;
 			
-			tmp = Regex.matchOne(content, "(?<=h_nav_items).*?(?=</div>)") ;
-			ret.setCategory( Regex.matchLast(tmp, "(?<=title=\").*?(?=\")")) ;
+			tmp = Regex.matchOne(content, "(?<=<div id=\"nav\">).*?(?=</div>)") ;
+			ret.setCategory( Regex.matchLast(tmp, "(?<=\">).*?(?=</a>)")) ;
 			System.out.println("category :"+ret.getCategory()) ;
-			ret.setSource1("新浪") ;
-			tmp = Regex.matchOne(content, "(?<=<span class=\"source\">).*?(?=</span>)") ;
-			for( int i = tmp.length()-1 ; i >= 0 ; i-- )
-			{
-				if( tmp.charAt(i)==' ' )
-				{
-					SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
-					String strTime = tmp.substring(0, i);
-					Date date = format.parse(strTime);
-					System.out.println(date);
-					ret.setPubtime((int) (date.getTime()/1000));
-					ret.setSource2(tmp.substring(i+1, tmp.length()));
-					break ;
-				}
-			}
+			
+			ret.setSource1("chinanews") ;
+			
+			tmp = Regex.matchOne(content, "(?<=source_baidu\">).*?(?=</span>)") ;
+			ret.setSource2( Regex.matchOne(tmp, "(?<=blank\">).*?(?=</a>)")) ;
+			
+			tmp = Regex.matchOne(content, "(?<=pubtime_baidu\">).*?(?=</span>)");
+			SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+			Date date = format.parse(tmp);
+			System.out.println(date);
+			ret.setPubtime((int) (date.getTime()/1000));
 		}catch(Exception e){
 			System.out.println("parsing error.") ;
 			return null ;
@@ -118,7 +112,7 @@ public class Main {
 	
 	public static void work()
 	{
-		String url = "http://news.sina.cn/roll.d.html/?vt=4" ;
+		String url = "http://www.chinanews.com/scroll-news/news1.html" ;
 
 		String text = getUrlContent(url);
 		ArrayList<String> urls = getUrlList(text);
@@ -128,6 +122,7 @@ public class Main {
 		{
 			url = urls.get(i);
 			if( url.contains("video")||url.contains("photo") )  continue ;
+			System.out.println(url);
 			text = getUrlContent(url) ;
 			
 			News news = getNews(text) ;
@@ -135,7 +130,7 @@ public class Main {
 			if( news.getPubtime()<=lastTime ) break ;
 			
 			System.out.println("cnt: "+cnt++) ;
-			writeIntoMysql(news);
+	//		writeIntoMysql(news);
 		}
 		
 		return ;
@@ -207,7 +202,7 @@ public class Main {
 	//	allInMysql();
 	//	delSame();		
 	//	if(true) return ;
-		titletiny();
+	//	titletiny();
 				
 		while(true)
 		{
