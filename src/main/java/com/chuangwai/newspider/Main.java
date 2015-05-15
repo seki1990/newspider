@@ -113,10 +113,8 @@ public class Main {
 		return ans ;
 	}
 	
-	public static void work()
+	public static void work(String url)
 	{
-		String url = "http://www.chinanews.com/scroll-news/news1.html" ;
-
 		String text = getUrlContent(url);
 		ArrayList<String> urls = getUrlList(text);
 		
@@ -203,25 +201,21 @@ public class Main {
 	
 	public static void main(String[] args)
 	{
-	//	allInMysql();
-	//	delSame();
-	//	titletiny();
+		String url = "http://www.chinanews.com/scroll-news/news1.html" ;
+		work(url);
 		
-	//	System.out.println(getUrlContent("http://www.chinanews.com/scroll-news/news1.html"));
-				
-	//	if(true) return ;
-		while(true)
+	/*	while(true)
 		{
 			try
 			{
-				work() ;
+				work(url) ;
 				sleep(1000*60) ;
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 
 }
