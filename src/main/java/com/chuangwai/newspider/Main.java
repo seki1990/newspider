@@ -3,6 +3,7 @@ package com.chuangwai.newspider;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,10 +78,10 @@ public class Main {
 			{
 				if( tmp.charAt(i)==' ' )
 				{
-					SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+					SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
 					String strTime = tmp.substring(0, i);
 					Date date = format.parse(strTime);
-					ret.setPubtime((int) date.getTime());
+					ret.setPubtime((int) date.getTime()/1000);
 					ret.setSource2(tmp.substring(i+1, tmp.length()));
 					break ;
 				}
@@ -176,7 +177,7 @@ public class Main {
 	public static void main(String[] args)
 	{
 //		runOnce();
-		
+				
 		while(true)
 		{
 			try
